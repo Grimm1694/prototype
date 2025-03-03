@@ -1,6 +1,7 @@
 "use client";
+
 import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
 import Lenis from "lenis";
 import Link from "next/link";
 import Image from "next/image";
@@ -136,7 +137,7 @@ const StickyCard = ({
   targetScale,
 }: SlideData & {
   i: number;
-  progress: any;
+  progress: MotionValue<number>;
   range: number[];
   targetScale: number;
 }) => {
@@ -187,8 +188,8 @@ const StickyCardList = () => {
   useEffect(() => {
     const lenis = new Lenis();
 
-    // Change the unused parameter to _e of type unknown.
-    lenis.on("scroll", (_e: unknown) => {});
+    // Removed unused parameter
+    lenis.on("scroll", () => {});
 
     function raf(time: number) {
       lenis.raf(time);
