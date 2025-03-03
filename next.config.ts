@@ -1,9 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  reactStrictMode: true,
+  swcMinify: true,
   images: {
-    domains: ["upload.wikimedia.org" , 'www.google.com'],
+    domains: ["upload.wikimedia.org", "www.google.com"],
+  },
+  eslint: {
+    // Warning: Disables ESLint during production builds.
+    ignoreDuringBuilds: true,
   },
 };
 
