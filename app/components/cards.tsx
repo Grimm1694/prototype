@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 interface SlideData {
   src: string;
@@ -17,11 +18,12 @@ const Slide = ({ slide }: SlideProps) => {
       className="carousel-focus flex items-center justify-center mx-2 transition-all duration-800 ease-in-out"
       style={{ width: "300px", height: "225px" }} // Reduced size for cards
     >
-      <img
+      <Image
         className="w-full h-full object-cover rounded-lg shadow-lg"
         src={slide.src}
         alt={slide.alt || "Carousel Image"}
-        
+        width={300}
+        height={225}
       />
     </div>
   );
