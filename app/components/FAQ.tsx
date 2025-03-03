@@ -1,8 +1,6 @@
 "use client";
 
 import {
-  useEffect,
-  useRef,
   useState,
   ReactElement,
   ReactNode,
@@ -16,19 +14,20 @@ import { cn } from "@/lib/utils";
    This version removes the neon background pseudo-elements,
    leaving just a simple card with optional hover glow.
    ============================================================ */
+
 interface NeonColorsProps {
   firstColor: string;
   secondColor: string;
 }
 
-interface NeonGradientCardProps {
+// Extend HTMLAttributes to properly type additional props
+interface NeonGradientCardProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: ReactElement;
   className?: string;
   children?: ReactNode;
   borderSize?: number;    // In pixels
   borderRadius?: number;  // In pixels
   neonColors?: NeonColorsProps;
-  [key: string]: any;
 }
 
 export const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
@@ -42,14 +41,9 @@ export const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
   },
   ...props
 }) => {
-  // We no longer need dynamic dimension logic for pseudo-elements,
-  // so the containerRef and dimension calculations are removed.
-  // The final style is just a simple card with optional hover glow.
-
   return (
     <div
-      // We still expose custom CSS variables so you can customize
-      // border size/color if desired, but no gradient BG is used.
+      // Expose custom CSS variables for border size/color customization.
       style={
         {
           "--border-size": `${borderSize}px`,
@@ -58,7 +52,7 @@ export const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
           "--neon-second-color": neonColors.secondColor,
         } as CSSProperties
       }
-      // On hover, we keep a simple pink glow for the "shine" effect.
+      // Apply hover glow effect and rounded corners.
       className={cn(
         "relative z-10 w-full",
         "rounded-[var(--border-radius)]",
@@ -125,7 +119,7 @@ interface FAQItemProps {
 }
 
 const FAQItem = ({ question, answer, isActive, onClick }: FAQItemProps) => {
-  // We still use the pink color for consistent styling:
+  // Using consistent pink neon colors.
   const pinkNeonColors = { firstColor: "#ff77ff", secondColor: "#ff77ff" };
 
   const content = (
@@ -146,7 +140,7 @@ const FAQItem = ({ question, answer, isActive, onClick }: FAQItemProps) => {
     </>
   );
 
-  // Active item: wrapped in NeonGradientCard, but no gradient BG.
+  // If active, wrap in NeonGradientCard with a pink glow.
   if (isActive) {
     return (
       <NeonGradientCard
@@ -161,7 +155,7 @@ const FAQItem = ({ question, answer, isActive, onClick }: FAQItemProps) => {
     );
   }
 
-  // Inactive card: a simple border, pink glow on hover
+  // Inactive card: a simple border with pink glow on hover.
   return (
     <div
       onClick={onClick}
