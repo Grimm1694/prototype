@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 
 interface SlideData {
   src: string;
@@ -17,10 +18,12 @@ const Slide = ({ slide }: SlideProps) => {
       className="carousel-focus flex items-center justify-center mx-2 transition-all duration-800 ease-in-out"
       style={{ width: "400px", height: "300px" }} // Adjust image size here
     >
-      <img
+      <Image
         className="w-full h-full object-cover rounded-lg shadow-lg"
         src={slide.src}
         alt={slide.alt || "Carousel Image"}
+        width={400}
+        height={300}
       />
     </div>
   );
@@ -38,11 +41,7 @@ export function Carousel({ slides }: CarouselProps) {
   useEffect(() => {
     if (carouselRef.current) {
       const carousel = carouselRef.current;
-      if (isPaused) {
-        carousel.style.animationPlayState = "paused"; // Pause animation
-      } else {
-        carousel.style.animationPlayState = "running"; // Resume animation
-      }
+      carousel.style.animationPlayState = isPaused ? "paused" : "running";
     }
   }, [isPaused]);
 
@@ -75,7 +74,7 @@ export function Carousel({ slides }: CarouselProps) {
             transform: translateX(0);
           }
           100% {
-            transform: translateX(calc(-50%)); // Move by half the total width
+            transform: translateX(calc(-50%));
           }
         }
 
