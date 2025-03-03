@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Lenis from "lenis";
 import Link from "next/link";
+import Image from "next/image";
 import { TypingAnimation } from "@/components/magicui/typing-animation";
 
 // ─── DATA & TYPES ─────────────────────────────────────────────
@@ -13,11 +14,9 @@ interface SlideData {
   src: string;
   alt?: string;
   content?: string;
-  // The bgColor field is no longer used in sticky cards because we apply a class
-  // bgColor?: string;
 }
 
-// We'll use the same sponsor data for both carousel and sticky cards.
+// Sponsor data for carousel and sticky cards.
 const sponsorData: SlideData[] = [
   {
     title: "Stripe",
@@ -114,10 +113,12 @@ function Slide({ slide }: { slide: SlideData }) {
       className="carousel-focus flex items-center justify-center mx-2 transition-all duration-800 ease-in-out"
       style={{ width: "300px", height: "225px" }}
     >
-      <img
+      <Image
         className="w-full h-full object-cover rounded-lg shadow-lg"
         src={slide.src}
         alt={slide.alt || "Carousel Image"}
+        width={300}
+        height={225}
       />
     </div>
   );
@@ -186,7 +187,8 @@ const StickyCardList = () => {
   useEffect(() => {
     const lenis = new Lenis();
 
-    lenis.on("scroll", (e: any) => {});
+    // Change the unused parameter to _e of type unknown.
+    lenis.on("scroll", (_e: unknown) => {});
 
     function raf(time: number) {
       lenis.raf(time);
