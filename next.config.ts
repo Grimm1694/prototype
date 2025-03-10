@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
   },
   eslint: {
     // Warning: Disables ESLint during production builds.
-    ignoreDuringBuilds: true,
+    // ignoreDuringBuilds: true,
   },
 };
 

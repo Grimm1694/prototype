@@ -29,7 +29,7 @@ const RegisterButton = () => {
           href="https://unstop.com/hackathons/colossus-2025"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block bg-hackathon-purple text-hackathon-light-pink px-8 py-3 rounded-full text-lg font-semibold hover:bg-hackathon-lavender transition-all duration-300 border-2 border-hackathon-light-pink"
+          className="inline-block bg-hackathon-purple text-black px-8 py-3 rounded-full text-lg font-bold hover:bg-hackathon-lavender transition-all duration-300 border-2 border-hackathon-light-pink"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >

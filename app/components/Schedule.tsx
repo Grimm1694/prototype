@@ -6,18 +6,19 @@ const scheduleData = [
   { time: "9:00 AM", event: "Registration and Check-in" },
   { time: "10:00 AM", event: "Opening Ceremony" },
   { time: "11:00 AM", event: "Hacking Begins" },
-  { time: "1:00 PM", event: "Lunch Break" },
-  { time: "6:00 PM", event: "Dinner" },
+  { time: "1:00 PM", event: "First Round Evaluation" },
+  { time: "2:00 PM", event: "Lunch Break" },
+  { time: "5:00 PM", event: "Second Round Evaluation" },
+  { time: "6:00 PM", event: "Snacks" },
+  { time: "8:00 PM", event: "Dinner" },
   { time: "12:00 AM", event: "Midnight Snack" },
-  { time: "9:00 AM", event: "Breakfast" },
-  { time: "12:00 PM", event: "Hacking Ends" },
-  { time: "2:00 PM", event: "Project Presentations" },
-  { time: "4:00 PM", event: "Awards Ceremony" },
+  { time: "8:00 AM", event: "Breakfast" },
+  { time: "12:00 PM", event: "Final Round Ends" },
 ];
 
 const Schedule = () => {
   return (
-    <section id="schedule" className="py-20 bg-hackathon-dark-blue">
+    <section id="schedule" className="py-20 bg-hackathon-darker-blue">
       <div className="container mx-auto px-4">
         <motion.h2
           className="text-4xl font-bold mb-8 text-center text-hackathon-light-pink"
