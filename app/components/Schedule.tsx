@@ -1,58 +1,317 @@
 "use client";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, useScroll } from "framer-motion";
 
-import { motion } from "framer-motion";
+interface TimelineEntry {
+  time: string;
+  event: string;
+  description: string;
+}
 
-const scheduleData = [
-  { time: "9:00 AM", event: "Registration and Check-in" },
-  { time: "10:00 AM", event: "Opening Ceremony" },
-  { time: "11:00 AM", event: "Hacking Begins" },
-  { time: "1:00 PM", event: "First Round Evaluation" },
-  { time: "2:00 PM", event: "Lunch Break" },
-  { time: "5:00 PM", event: "Second Round Evaluation" },
-  { time: "6:00 PM", event: "Snacks" },
-  { time: "8:00 PM", event: "Dinner" },
-  { time: "12:00 AM", event: "Midnight Snack" },
-  { time: "8:00 AM", event: "Breakfast" },
-  { time: "12:00 PM", event: "Final Round Ends" },
+const timelineData: TimelineEntry[] = [
+  {
+    time: "9:00 AM",
+    event: "Registration and Check-in",
+    description: "Arrive and register your attendance.",
+  },
+  {
+    time: "10:00 AM",
+    event: "Opening Ceremony",
+    description: "Kick off the event with inspiring opening remarks.",
+  },
+  {
+    time: "11:00 AM",
+    event: "Hacking Begins",
+    description: "Start brainstorming and coding innovative projects.",
+  },
+  {
+    time: "1:00 PM",
+    event: "Lunch Break",
+    description: "Enjoy a break and network with fellow participants.",
+  },
+  {
+    time: "6:00 PM",
+    event: "Dinner",
+    description: "Dine and discuss progress over a great meal.",
+  },
+  {
+    time: "12:00 AM",
+    event: "Midnight Snack",
+    description: "Grab a quick snack to keep your energy up.",
+  },
+  {
+    time: "9:00 AM",
+    event: "Breakfast",
+    description: "Start your day with a hearty breakfast.",
+  },
+  {
+    time: "12:00 PM",
+    event: "Hacking Ends",
+    description: "Wrap up your projects and prepare for the next phase.",
+  },
+  {
+    time: "2:00 PM",
+    event: "Project Presentations",
+    description: "Showcase your completed projects to everyone.",
+  },
+  {
+    time: "4:00 PM",
+    event: "Awards Ceremony",
+    description: "Celebrate and receive awards for your hard work.",
+  },
 ];
 
-const Schedule = () => {
+const TimelineItem = ({ item, index, isVisible }: { item: TimelineEntry; index: number; isVisible: boolean }) => {
+  const isLeft = index % 2 === 0;
+  
+  // Animation variants for cards
+  const cardVariants = {
+    hidden: { 
+      opacity: 0, 
+      x: isLeft ? -50 : 50,
+      y: 20
+    },
+    visible: { 
+      opacity: 1, 
+      x: 0,
+      y: 0,
+      transition: { 
+        type: "spring", 
+        stiffness: 80, 
+        damping: 15,
+        delay: 0.1 
+      } 
+    }
+  };
+  
+  // Animation variants for branch lines
+  const branchVariants = {
+    hidden: { scaleX: 0 },
+    visible: { 
+      scaleX: 1, 
+      transition: { 
+        type: "spring", 
+        stiffness: 70, 
+        damping: 12,
+        delay: 0.05
+      } 
+    }
+  };
+  
+  // Animation variants for dots
+  const dotVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: { 
+      scale: 1, 
+      opacity: 1, 
+      transition: { 
+        type: "spring", 
+        stiffness: 150, 
+        damping: 15
+      } 
+    }
+  };
+
   return (
-    <section id="schedule" className="py-20 bg-hackathon-darker-blue">
-      <div className="container mx-auto px-4">
-        <motion.h2
-          className="text-4xl font-bold mb-8 text-center text-hackathon-light-pink"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          Space Station Itinerary
-        </motion.h2>
-        <motion.div
-          className="grid md:grid-cols-2 gap-8"
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          viewport={{ once: true }}
-        >
-          {scheduleData.map((item, index) => (
+    <div
+      className="grid items-center relative min-h-[120px]"
+      style={{ gridTemplateColumns: "1fr 80px auto 80px 1fr" }}
+    >
+      {isLeft ? (
+        <>
+          {/* Left side card with connector extension */}
+          <div className="col-start-1 col-end-2 flex justify-end pr-0">
             <motion.div
-              key={index}
-              className="bg-hackathon-darker-blue p-4 rounded-lg shadow-lg border-2 border-hackathon-purple"
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.2 }}
+              variants={cardVariants}
+              initial="hidden"
+              animate={isVisible ? "visible" : "hidden"}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 0 20px rgba(255, 110, 199, 0.5)",
+                borderColor: "#FF6EC7",
+              }}
+              transition={{ duration: 0.3 }}
+              className="bg-hackathon-darker-blue p-6 rounded-lg shadow-lg border-2 border-hackathon-purple max-w-sm w-full backdrop-blur-sm bg-opacity-90 flex flex-col relative"
             >
+              {/* Connector extension from card */}
+              <div className="absolute right-0 top-1/2 w-4 h-[3px] bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink transform -translate-y-1/2 translate-x-full"></div>
+              
               <h3 className="text-xl font-semibold mb-2 text-hackathon-lavender">
-                {item.time}
+                {item.time} - {item.event}
               </h3>
-              <p className="text-hackathon-beige">{item.event}</p>
+              <p className="text-hackathon-beige">{item.description}</p>
             </motion.div>
-          ))}
+          </div>
+          {/* Left branch line */}
+          <div className="col-start-2 col-end-3 flex justify-end items-center h-full">
+            <motion.div
+              variants={branchVariants}
+              initial="hidden"
+              animate={isVisible ? "visible" : "hidden"}
+              className="w-full h-[3px] bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink origin-right"
+            />
+          </div>
+          {/* Center dot */}
+          <div className="col-start-3 col-end-4 flex justify-center items-center">
+            <motion.div
+              variants={dotVariants}
+              initial="hidden"
+              animate={isVisible ? "visible" : "hidden"}
+              className="z-10 w-6 h-6 rounded-full bg-hackathon-light-pink shadow-[0_0_15px_rgba(255,110,199,0.7)] border-4 border-hackathon-darker-blue"
+            />
+          </div>
+          {/* Empty right branch and card */}
+          <div className="col-start-4 col-end-6"></div>
+        </>
+      ) : (
+        <>
+          {/* Empty left branch and card */}
+          <div className="col-start-1 col-end-3"></div>
+          {/* Center dot */}
+          <div className="col-start-3 col-end-4 flex justify-center items-center">
+            <motion.div
+              variants={dotVariants}
+              initial="hidden"
+              animate={isVisible ? "visible" : "hidden"}
+              className="z-10 w-6 h-6 rounded-full bg-hackathon-light-pink shadow-[0_0_15px_rgba(255,110,199,0.7)] border-4 border-hackathon-darker-blue"
+            />
+          </div>
+          {/* Right branch line */}
+          <div className="col-start-4 col-end-5 flex justify-start items-center h-full">
+            <motion.div
+              variants={branchVariants}
+              initial="hidden"
+              animate={isVisible ? "visible" : "hidden"}
+              className="w-full h-[3px] bg-gradient-to-l from-hackathon-purple to-hackathon-light-pink origin-left"
+            />
+          </div>
+          {/* Right side card with connector extension */}
+          <div className="col-start-5 col-end-6 flex justify-start pl-0">
+            <motion.div
+              variants={cardVariants}
+              initial="hidden"
+              animate={isVisible ? "visible" : "hidden"}
+              whileHover={{
+                scale: 1.05,
+                boxShadow: "0 0 20px rgba(255, 110, 199, 0.5)",
+                borderColor: "#FF6EC7",
+              }}
+              transition={{ duration: 0.3 }}
+              className="bg-hackathon-darker-blue p-6 rounded-lg shadow-lg border-2 border-hackathon-purple max-w-sm w-full backdrop-blur-sm bg-opacity-90 flex flex-col relative"
+            >
+              {/* Connector extension from card */}
+              <div className="absolute left-0 top-1/2 w-4 h-[3px] bg-gradient-to-l from-hackathon-purple to-hackathon-light-pink transform -translate-y-1/2 -translate-x-full"></div>
+              
+              <h3 className="text-xl font-semibold mb-2 text-hackathon-lavender">
+                {item.time} - {item.event}
+              </h3>
+              <p className="text-hackathon-beige">{item.description}</p>
+            </motion.div>
+          </div>
+        </>
+      )}
+    </div>
+  );
+};
+
+const Timeline = ({ data }: { data: TimelineEntry[] }) => {
+  // Reference for the timeline section to drive the vertical line
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Create refs for timeline items to track visibility
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [visibleItems, setVisibleItems] = useState<boolean[]>(
+    Array(data.length).fill(false)
+  );
+
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+
+    itemRefs.current.forEach((ref, index) => {
+      if (!ref) return;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setVisibleItems((prev) => {
+                const newState = [...prev];
+                newState[index] = true;
+                return newState;
+              });
+              observer.unobserve(ref);
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+
+      observer.observe(ref);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
+  }, []);
+
+  return (
+    <section 
+      ref={containerRef} 
+      className="py-24 relative bg-gradient-to-b from-hackathon-dark-blue to-hackathon-darker-blue overflow-hidden mr-5"
+    >
+      {/* Background decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute -left-24 top-1/4 w-64 h-64 rounded-full bg-hackathon-purple opacity-10 blur-3xl"></div>
+        <div className="absolute right-0 top-3/4 w-80 h-80 rounded-full bg-hackathon-light-pink opacity-5 blur-3xl"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-5xl font-bold text-hackathon-light-pink mb-3 uppercase">
+            Event Schedule
+          </h2>
+          <div className="w-24 h-1 bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink mx-auto rounded-full"></div>
         </motion.div>
+
+        {/* Main vertical line (grows with scroll) - extended to reach the last item */}
+        <div className="absolute left-1/2 top-32 bottom-20 w-1 bg-hackathon-darker-blue z-0" style={{ height: 'calc(100% - 160px)' }}>
+          <motion.div
+            style={{ scaleY: scrollYProgress, height: "100%" }}
+            className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"
+          />
+        </div>
+
+        <div className="space-y-20 relative z-10">
+          {data.map((item, index) => (
+            <div 
+              key={index} 
+              ref={(el) => {
+                itemRefs.current[index] = el;
+              }}
+            >
+              <TimelineItem 
+                item={item} 
+                index={index} 
+                isVisible={visibleItems[index]} 
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
-export default Schedule;
+export default function App() {
+  return <Timeline data={timelineData} />;
+}

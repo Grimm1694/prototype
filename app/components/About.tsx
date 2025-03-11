@@ -13,7 +13,7 @@ const About = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          Mission Briefing
+          MISSION BRIEFING
         </motion.h2>
         <motion.div
           className="grid md:grid-cols-2 gap-8"
