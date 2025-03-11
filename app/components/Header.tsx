@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
@@ -25,16 +25,18 @@ const Header = () => {
     "FAQ",
   ];
 
-  const handleNavItemClick = (e, item) => {
-    e.preventDefault();
-    const element = document.getElementById(item.toLowerCase());
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
-    // Close mobile menu after click
-    setMenuOpen(false);
-  };
-
+  const handleNavItemClick = (
+  e: React.MouseEvent<HTMLAnchorElement>, 
+  item: string
+) => {
+  e.preventDefault();
+  const element = document.getElementById(item.toLowerCase());
+  if (element) {
+    element.scrollIntoView({ behavior: "smooth" });
+  }
+  // Close mobile menu after click
+  setMenuOpen(false);
+};
   return (
     <motion.header
       className={`fixed w-full z-50 transition-all duration-300 ${
