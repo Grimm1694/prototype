@@ -272,8 +272,8 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   }, []);
 
   return (
-    <section
-      ref={containerRef}
+    <section 
+      ref={containerRef} 
       className="py-24 relative bg-gradient-to-b from-hackathon-dark-blue to-hackathon-darker-blue overflow-hidden mr-5"
     >
       {/* Background decorative elements */}

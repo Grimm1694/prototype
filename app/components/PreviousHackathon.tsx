@@ -51,8 +51,8 @@ export default function PreviousHackathon() {
 
   return (
     <div className="relative overflow-hidden w-full h-full py-20">
-      <h2 className="text-4xl font-press-start text-center mb-8 border-hackathon-light-pink pb-4 text-hackathon-light-pink">
-        TIME CAPSULE
+      <h2 className="text-4xl font-bold text-center mb-8 border-hackathon-light-pink pb-4 text-hackathon-light-pink">
+        Time Capsule
       </h2>
       <Carousel slides={slideData} />
     </div>
