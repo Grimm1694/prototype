@@ -30,8 +30,6 @@ const Header = () => {
   const navItems = [
     "About",
     "Schedule",
-    "Speakers",
-    "Sponsors",
     "Previous Hackathon",
     "FAQ",
   ];
