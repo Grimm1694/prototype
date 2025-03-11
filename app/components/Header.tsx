@@ -14,7 +14,7 @@ const Header = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
-    const handleMouseMove = (e: { clientX: any; clientY: any; }) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     };
 
