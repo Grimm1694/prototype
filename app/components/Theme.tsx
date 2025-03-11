@@ -44,8 +44,7 @@ const Theme = () => {
               Future of AI
             </h3>
             <p className="text-hackathon-beige text-center">
-              Innovating with advanced AI to solve tomorrow's challenges in real
-              time.
+              Innovating with advanced AI to solve tomorrow&apos;s challenges in real time.
             </p>
           </div>
         </motion.div>
