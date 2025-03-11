@@ -8,37 +8,44 @@ import tc4 from "../../public/images/tc4.jpg";
 import tc5 from "../../public/images/tc5.jpg";
 import tc6 from "../../public/images/tc6.jpg";
 
-export default function PreviousHackton() {
-  const slideData = [
+// Optionally define your SlideData interface if not already defined elsewhere:
+interface SlideData {
+  title: string;
+  button: string;
+  src: string;
+}
+
+export default function PreviousHackathon() {
+  const slideData: SlideData[] = [
     {
       title: "Mystic Mountains",
       button: "Explore Component",
-      src: tc1,
+      src: tc1.src,
     },
     {
       title: "Urban Dreams",
       button: "Explore Component",
-      src: tc2,
+      src: tc2.src,
     },
     {
       title: "Neon Nights",
       button: "Explore Component",
-      src: tc3,
+      src: tc3.src,
     },
     {
       title: "Neon Nights",
       button: "Explore Component",
-      src: tc4,
+      src: tc4.src,
     },
     {
       title: "Neon Nights",
       button: "Explore Component",
-      src: tc5,
+      src: tc5.src,
     },
     {
       title: "Neon Nights",
       button: "Explore Component",
-      src: tc6,
+      src: tc6.src,
     },
   ];
 
