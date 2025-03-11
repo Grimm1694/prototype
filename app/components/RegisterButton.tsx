@@ -13,7 +13,7 @@ const RegisterButton = () => {
           transition={{ duration: 0.5 }}
           viewport={{ once: true }}
         >
-          Ready to join the Cosmic Coding Crusade?
+          Ready to join the Hackathon?
         </motion.h2>
         <motion.p
           className="text-md sm:text-lg mb-8 text-hackathon-beige font-jetbrains"
@@ -22,8 +22,8 @@ const RegisterButton = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           viewport={{ once: true }}
         >
-          Don&apos;t miss out on this stellar opportunity to innovate,
-          collaborate, and win astronomical prizes!
+          Don't miss out on this opportunity to innovate, collaborate, and win
+          great prizes!
         </motion.p>
         <motion.a
           href="https://unstop.com/hackathons/colossus-2025"
@@ -33,7 +33,7 @@ const RegisterButton = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          Beam Me Up to Unstop
+          Register Now
         </motion.a>
       </div>
     </section>
