@@ -61,55 +61,63 @@ const timelineData: TimelineEntry[] = [
   },
 ];
 
-const TimelineItem = ({ item, index, isVisible }: { item: TimelineEntry; index: number; isVisible: boolean }) => {
+const TimelineItem = ({
+  item,
+  index,
+  isVisible,
+}: {
+  item: TimelineEntry;
+  index: number;
+  isVisible: boolean;
+}) => {
   const isLeft = index % 2 === 0;
-  
+
   // Animation variants for cards
   const cardVariants = {
-    hidden: { 
-      opacity: 0, 
+    hidden: {
+      opacity: 0,
       x: isLeft ? -50 : 50,
-      y: 20
+      y: 20,
     },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       x: 0,
       y: 0,
-      transition: { 
-        type: "spring", 
-        stiffness: 80, 
+      transition: {
+        type: "spring",
+        stiffness: 80,
         damping: 15,
-        delay: 0.1 
-      } 
-    }
+        delay: 0.1,
+      },
+    },
   };
-  
+
   // Animation variants for branch lines
   const branchVariants = {
     hidden: { scaleX: 0 },
-    visible: { 
-      scaleX: 1, 
-      transition: { 
-        type: "spring", 
-        stiffness: 70, 
+    visible: {
+      scaleX: 1,
+      transition: {
+        type: "spring",
+        stiffness: 70,
         damping: 12,
-        delay: 0.05
-      } 
-    }
+        delay: 0.05,
+      },
+    },
   };
-  
+
   // Animation variants for dots
   const dotVariants = {
     hidden: { scale: 0, opacity: 0 },
-    visible: { 
-      scale: 1, 
-      opacity: 1, 
-      transition: { 
-        type: "spring", 
-        stiffness: 150, 
-        damping: 15
-      } 
-    }
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 150,
+        damping: 15,
+      },
+    },
   };
 
   return (
@@ -135,11 +143,13 @@ const TimelineItem = ({ item, index, isVisible }: { item: TimelineEntry; index: 
             >
               {/* Connector extension from card */}
               <div className="absolute right-0 top-1/2 w-4 h-[3px] bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink transform -translate-y-1/2 translate-x-full"></div>
-              
-              <h3 className="text-xl font-semibold mb-2 text-hackathon-lavender">
+
+              <h3 className="text-sm font-press-start mb-2 text-hackathon-lavender">
                 {item.time} - {item.event}
               </h3>
-              <p className="text-hackathon-beige">{item.description}</p>
+              <p className="text-hackathon-beige font-jetbrains text-sm">
+                {item.description}
+              </p>
             </motion.div>
           </div>
           {/* Left branch line */}
@@ -201,11 +211,13 @@ const TimelineItem = ({ item, index, isVisible }: { item: TimelineEntry; index: 
             >
               {/* Connector extension from card */}
               <div className="absolute left-0 top-1/2 w-4 h-[3px] bg-gradient-to-l from-hackathon-purple to-hackathon-light-pink transform -translate-y-1/2 -translate-x-full"></div>
-              
-              <h3 className="text-xl font-semibold mb-2 text-hackathon-lavender">
+
+              <h3 className="text-sm font-press-start mb-2 text-hackathon-lavender">
                 {item.time} - {item.event}
               </h3>
-              <p className="text-hackathon-beige">{item.description}</p>
+              <p className="text-hackathon-beige text-md font-jetbrains">
+                {item.description}
+              </p>
             </motion.div>
           </div>
         </>
@@ -260,8 +272,8 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   }, []);
 
   return (
-    <section 
-      ref={containerRef} 
+    <section
+      ref={containerRef}
       className="py-24 relative bg-gradient-to-b from-hackathon-dark-blue to-hackathon-darker-blue overflow-hidden mr-5"
     >
       {/* Background decorative elements */}
@@ -277,14 +289,17 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl font-bold text-hackathon-light-pink mb-3 uppercase">
+          <h2 className="text-4xl font-press-start text-hackathon-light-pink mb-3 uppercase">
             Event Schedule
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink mx-auto rounded-full"></div>
         </motion.div>
 
         {/* Main vertical line (grows with scroll) - extended to reach the last item */}
-        <div className="absolute left-1/2 top-32 bottom-20 w-1 bg-hackathon-darker-blue z-0" style={{ height: 'calc(100% - 160px)' }}>
+        <div
+          className="absolute left-1/2 top-32 bottom-20 w-1 bg-hackathon-darker-blue z-0"
+          style={{ height: "calc(100% - 160px)" }}
+        >
           <motion.div
             style={{ scaleY: scrollYProgress, height: "100%" }}
             className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"
@@ -293,16 +308,16 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
         <div className="space-y-20 relative z-10">
           {data.map((item, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               ref={(el) => {
                 itemRefs.current[index] = el;
               }}
             >
-              <TimelineItem 
-                item={item} 
-                index={index} 
-                isVisible={visibleItems[index]} 
+              <TimelineItem
+                item={item}
+                index={index}
+                isVisible={visibleItems[index]}
               />
             </div>
           ))}
