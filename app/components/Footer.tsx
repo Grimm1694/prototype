@@ -1,4 +1,3 @@
-import Link from "next/link";
 import {
   FaInstagram,
   FaLinkedin,
@@ -68,7 +67,7 @@ const Footer = () => {
               </a>
               <a
                 title="LinkedIn"
-                href="https://www.linkedin.com/company/hack-colossus/posts/?feedView=all"
+                href="https://www.linkedin.com/company/hackcolossus"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-pink-200 hover:text-hackathon-purple transition-colors duration-300"
@@ -104,6 +103,9 @@ const Footer = () => {
           </div>
         </div>
 
+        <div className="mt-8 text-center text-sm">
+          © 2023 Hackathon. All rights reserved.
+        </div>
       </div>
     </footer>
   );
