@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, CSSProperties } from "react";
-import { motion, AnimatePresence, useMotionValue } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, MotionValue } from "framer-motion";
 import Image from "next/image";
 // Utility to conditionally join classes – you can use your own implementation.
 import { cn } from "@/lib/utils";
@@ -69,8 +69,8 @@ export const FollowPointer = ({
   y,
   title,
 }: {
-  x: any;
-  y: any;
+  x: MotionValue<number>;
+  y: MotionValue<number>;
   title?: string | React.ReactNode;
 }) => {
   const colors = [
