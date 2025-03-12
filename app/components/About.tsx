@@ -127,7 +127,7 @@ const About = () => {
             transition={{ duration: 1, delay: 0.6, ease: "easeInOut" }}
             className="relative inline-block"
           >
-            <span className="relative z-10">Colossus 2025</span>
+            <span className="relative z-10">Dr AIT</span>
             {/* Removed the underline element */}
           </motion.span>
         </motion.h2>
