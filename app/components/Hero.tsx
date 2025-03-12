@@ -76,7 +76,7 @@ const Hero: React.FC = () => {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [targetDate]);
 
   // Mouse position tracking - only for desktop
   const mouseX = useMotionValue(0);
