@@ -30,11 +30,16 @@ const Header = () => {
   const navItems = [
     "About",
     "Schedule",
+    // "Speakers",
+    // "Sponsors",
     "Previous Hackathon",
     "FAQ",
   ];
 
-  const handleNavItemClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, item: string) => {
+  const handleNavItemClick = (
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+    item: string
+  ) => {
     e.preventDefault();
     const element = document.getElementById(item.toLowerCase());
     if (element) {
@@ -53,9 +58,9 @@ const Header = () => {
         type: "spring",
         stiffness: 400,
         damping: 10,
-        staggerChildren: 0.05
-      }
-    }
+        staggerChildren: 0.05,
+      },
+    },
   };
 
   const letterVariants = {
@@ -66,9 +71,9 @@ const Header = () => {
         delay: i * 0.05,
         duration: 0.6,
         repeat: 0,
-        ease: "easeInOut"
-      }
-    })
+        ease: "easeInOut",
+      },
+    }),
   };
 
   // Nav item animations
@@ -79,9 +84,9 @@ const Header = () => {
       transition: {
         type: "spring",
         stiffness: 300,
-        damping: 8
-      }
-    }
+        damping: 8,
+      },
+    },
   };
 
   // Floating cursor spotlight effect
@@ -92,9 +97,9 @@ const Header = () => {
       transition: {
         type: "spring",
         damping: 20,
-        stiffness: 300
-      }
-    })
+        stiffness: 300,
+      },
+    }),
   };
 
   // Mobile menu variants
@@ -107,8 +112,8 @@ const Header = () => {
         ease: "easeInOut",
         staggerChildren: 0.05,
         staggerDirection: -1,
-        when: "afterChildren"
-      }
+        when: "afterChildren",
+      },
     },
     open: {
       opacity: 1,
@@ -118,9 +123,9 @@ const Header = () => {
         ease: "easeInOut",
         staggerChildren: 0.1,
         staggerDirection: 1,
-        when: "beforeChildren"
-      }
-    }
+        when: "beforeChildren",
+      },
+    },
   };
 
   const menuItemVariants = {
@@ -128,37 +133,37 @@ const Header = () => {
       opacity: 0,
       y: -10,
       x: -20,
-      transition: { duration: 0.2 }
+      transition: { duration: 0.2 },
     },
     open: {
       opacity: 1,
       y: 0,
       x: 0,
-      transition: { duration: 0.3, type: "spring" }
-    }
+      transition: { duration: 0.3, type: "spring" },
+    },
   };
 
   // Header background animation variants
   const headerVariants = {
     initial: { y: -100 },
-    animate: { 
+    animate: {
       y: 0,
-      transition: { 
+      transition: {
         duration: 0.5,
-        ease: "easeOut"
-      }
+        ease: "easeOut",
+      },
     },
     scrolled: {
       boxShadow: "0 4px 30px rgba(0, 0, 0, 0.2)",
-      transition: { duration: 0.4 }
-    }
+      transition: { duration: 0.4 },
+    },
   };
 
   // Fancy hover effect for the entire nav
   const navContainerVariants = {
-    hover: { 
-      transition: { staggerChildren: 0.1, delayChildren: 0.05 }
-    }
+    hover: {
+      transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+    },
   };
 
   return (
@@ -187,7 +192,10 @@ const Header = () => {
             variants={logoVariants}
             className="relative"
           >
-            <Link href="/" className="text-3xl font-extrabold text-hackathon-light-pink relative z-10 tracking-wider">
+            <Link
+              href="/"
+              className="text-md font-press-start text-hackathon-light-pink relative z-10 tracking-wider"
+            >
               {Array.from("Colossus 2025").map((letter, i) => (
                 <motion.span
                   key={i}
@@ -208,19 +216,20 @@ const Header = () => {
               transition={{
                 duration: 3,
                 repeat: Infinity,
-                repeatType: "mirror"
+                repeatType: "mirror",
               }}
             />
           </motion.div>
 
           {/* Desktop Navigation */}
-          <motion.ul 
+          <motion.ul
             className="hidden md:flex space-x-8"
             variants={navContainerVariants}
             whileHover="hover"
           >
             {navItems.map((item) => (
-              <motion.li key={item}
+              <motion.li
+                key={item}
                 onHoverStart={() => setHoveredItem(item)}
                 onHoverEnd={() => setHoveredItem(null)}
                 variants={itemVariants}
@@ -228,13 +237,13 @@ const Header = () => {
               >
                 <Link
                   href={`#${item.toLowerCase()}`}
-                  className="text-2xl font-medium text-hackathon-beige hover:text-hackathon-lavender transition-colors duration-300 relative"
+                  className="text-lg font-jetbrains text-hackathon-beige hover:text-hackathon-lavender transition-colors duration-300 relative"
                   onClick={(e) => handleNavItemClick(e, item)}
                 >
                   {item}
-                  <motion.span 
+                  <motion.span
                     className="absolute -bottom-1 left-0 h-0.5 bg-hackathon-light-pink"
-                    animate={{ 
+                    animate={{
                       width: hoveredItem === item ? "100%" : "0%",
                     }}
                     initial={{ width: "0%" }}
@@ -257,10 +266,7 @@ const Header = () => {
           </motion.ul>
 
           {/* Mobile Hamburger Menu Button */}
-          <motion.div 
-            className="md:hidden "
-            whileTap={{ scale: 0.9 }}
-          >
+          <motion.div className="md:hidden " whileTap={{ scale: 0.9 }}>
             <motion.button
               onClick={() => setMenuOpen(!menuOpen)}
               aria-label="Toggle menu"
@@ -300,12 +306,12 @@ const Header = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    whileHover={{ 
+                    whileHover={{
                       scale: 1.05,
                       transition: {
                         yoyo: Infinity,
-                        duration: 0.3
-                      }
+                        duration: 0.3,
+                      },
                     }}
                   >
                     <motion.path
@@ -314,7 +320,12 @@ const Header = () => {
                       strokeWidth={2}
                       d="M4 6h16"
                       animate={{ y: [0, -1, 0] }}
-                      transition={{ delay: 0, duration: 1, repeat: Infinity, repeatDelay: 0.5 }}
+                      transition={{
+                        delay: 0,
+                        duration: 1,
+                        repeat: Infinity,
+                        repeatDelay: 0.5,
+                      }}
                     />
                     <motion.path
                       strokeLinecap="round"
@@ -322,7 +333,12 @@ const Header = () => {
                       strokeWidth={2}
                       d="M4 12h16"
                       animate={{ y: [0, 1, 0] }}
-                      transition={{ delay: 0.2, duration: 1, repeat: Infinity, repeatDelay: 0.5 }}
+                      transition={{
+                        delay: 0.2,
+                        duration: 1,
+                        repeat: Infinity,
+                        repeatDelay: 0.5,
+                      }}
                     />
                     <motion.path
                       strokeLinecap="round"
@@ -330,17 +346,22 @@ const Header = () => {
                       strokeWidth={2}
                       d="M4 18h16"
                       animate={{ y: [0, -1, 0] }}
-                      transition={{ delay: 0.4, duration: 1, repeat: Infinity, repeatDelay: 0.5 }}
+                      transition={{
+                        delay: 0.4,
+                        duration: 1,
+                        repeat: Infinity,
+                        repeatDelay: 0.5,
+                      }}
                     />
                   </motion.svg>
                 )}
               </AnimatePresence>
-              
+
               <motion.span
                 className="absolute inset-0 rounded-full bg-hackathon-lavender/20"
-                animate={{ 
+                animate={{
                   scale: [1, 1.2, 1],
-                  opacity: [0.2, 0.4, 0.2]
+                  opacity: [0.2, 0.4, 0.2],
                 }}
                 transition={{
                   duration: 2,
@@ -354,7 +375,7 @@ const Header = () => {
         {/* Mobile Navigation Menu */}
         <AnimatePresence>
           {menuOpen && (
-            <motion.div 
+            <motion.div
               className="md:hidden bg-hackathon-dark-blue/95 backdrop-blur-md overflow-hidden mr-5"
               initial="closed"
               animate="open"
@@ -363,31 +384,29 @@ const Header = () => {
             >
               <ul className="flex flex-col space-y-6 p-6">
                 {navItems.map((item, index) => (
-                  <motion.li 
+                  <motion.li
                     key={item}
                     variants={menuItemVariants}
                     custom={index}
                     whileHover={{ x: 15, color: "#c9a0dc" }}
-                    className="border-b border-hackathon-lavender/20 pb-3 "
+                    className="text-xs border-b border-hackathon-lavender/20 pb-3 font-jetbrains"
                   >
                     <Link
                       href={`#${item.toLowerCase()}`}
                       className="block text-xl font-medium text-hackathon-beige hover:text-hackathon-lavender transition-all duration-300"
                       onClick={(e) => handleNavItemClick(e, item)}
                     >
-                      <motion.span className="inline-block">
-                        {item}
-                      </motion.span>
-                      <motion.div 
+                      <motion.span className="inline-block">{item}</motion.span>
+                      <motion.div
                         className="w-2 h-2 rounded-full bg-hackathon-light-pink inline-block ml-3"
                         animate={{
                           scale: [1, 1.5, 1],
-                          opacity: [0.7, 1, 0.7]
+                          opacity: [0.7, 1, 0.7],
                         }}
                         transition={{
                           duration: 1.5,
                           delay: index * 0.2,
-                          repeat: Infinity
+                          repeat: Infinity,
                         }}
                       />
                     </Link>

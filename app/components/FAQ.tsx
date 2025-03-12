@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  useState,
-  ReactElement,
-  ReactNode,
-  CSSProperties,
-} from "react";
+import { useState, ReactElement, ReactNode, CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 
 /* ============================================================
@@ -25,8 +20,8 @@ interface NeonGradientCardProps extends React.HTMLAttributes<HTMLDivElement> {
   as?: ReactElement;
   className?: string;
   children?: ReactNode;
-  borderSize?: number;    // In pixels
-  borderRadius?: number;  // In pixels
+  borderSize?: number; // In pixels
+  borderRadius?: number; // In pixels
   neonColors?: NeonColorsProps;
 }
 
@@ -66,7 +61,7 @@ export const NeonGradientCard: React.FC<NeonGradientCardProps> = ({
         className={cn(
           "w-full min-h-[120px]",
           "rounded-[calc(var(--border-radius)-var(--border-size))]",
-          "bg-hackathon-dark-blue p-6 sm:p-8",
+          "bg-hackathon-dark-blue p-4 sm:p-6",
           "dark:bg-neutral-900"
         )}
       >
@@ -88,26 +83,26 @@ const faqData = [
   {
     question: "What is a hackathon?",
     answer:
-      "A hackathon is an event where participants collaborate intensively on software projects, typically over a short period of time, usually 24-48 hours.",
+      "A hackathon is an event where participants work together on software projects over a short period, usually 24-48 hours.",
   },
   {
     question: "Who can participate?",
     answer:
-      "Anyone with an interest in technology and innovation can participate, regardless of their skill level or background.",
+      "Anyone interested in technology and innovation can join, regardless of their skill level.",
   },
   {
     question: "Do I need to know how to code?",
     answer:
-      "While coding skills are helpful, they are not always necessary. Hackathons often need designers, project managers, and idea generators too.",
+      "Coding skills are helpful, but hackathons welcome designers, project managers, and creative thinkers too.",
   },
   {
     question: "What should I bring?",
     answer:
-      "Bring your laptop, charger, and any other devices you might need. We'll provide food, drinks, and a place to work.",
+      "Bring your laptop, charger, and any essential devices. We'll provide food, drinks, and a workspace.",
   },
   {
     question: "Is there a fee to participate?",
-    answer: "No, participation in Colossus 2025 is completely free!",
+    answer: "No, Colossus 2025 is completely free!",
   },
 ];
 
@@ -125,15 +120,15 @@ const FAQItem = ({ question, answer, isActive, onClick }: FAQItemProps) => {
   const content = (
     <>
       <div className="flex justify-between items-center">
-        <h3 className="text-2xl font-bold text-hackathon-light-pink">
+        <h3 className="text-lg sm:text-xl font-press-start text-hackathon-light-pink">
           {question}
         </h3>
-        <span className="text-3xl text-hackathon-light-pink">
+        <span className="text-xl sm:text-2xl font-jetbrains text-hackathon-light-pink">
           {isActive ? "−" : "+"}
         </span>
       </div>
       {isActive && (
-        <p className="mt-4 text-lg text-hackathon-beige leading-relaxed">
+        <p className="mt-4 text-base sm:text-xl font-jetbrains text-hackathon-beige leading-relaxed">
           {answer}
         </p>
       )}
@@ -160,7 +155,7 @@ const FAQItem = ({ question, answer, isActive, onClick }: FAQItemProps) => {
     <div
       onClick={onClick}
       className={cn(
-        "cursor-pointer mb-6 border-2 border-hackathon-purple bg-hackathon-dark-blue p-6 sm:p-8",
+        "cursor-pointer mb-6 border-2 border-hackathon-purple bg-hackathon-dark-blue p-4 sm:p-6",
         "transition-all duration-300",
         "hover:border-hackathon-light-pink hover:shadow-[0_0_10px_#ff77ff,0_0_30px_#ff77ff]"
       )}
@@ -178,9 +173,12 @@ const FAQ = () => {
   };
 
   return (
-    <section id="faq" className="py-20 bg-hackathon-darker-blue font-mono">
+    <section
+      id="faq"
+      className="py-16 sm:py-20 bg-hackathon-darker-blue font-mono"
+    >
       <div className="container mx-auto px-4 max-w-3xl">
-        <h2 className="text-4xl font-bold text-center mb-8 border-b-2 border-hackathon-light-pink pb-4 text-hackathon-light-pink">
+        <h2 className="text-3xl sm:text-4xl font-press-start text-center mb-6 sm:mb-8 border-b-2 border-hackathon-light-pink pb-2 sm:pb-4 text-hackathon-light-pink">
           FAQs
         </h2>
         {faqData.map((item, index) => (

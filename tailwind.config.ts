@@ -63,7 +63,12 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontFamily: {
+        // Use the same names as defined in @font-face
+        "press-start": ['"Press Start 2P"', "cursive"],
+        "jetbrains": ['"JetBrains Mono"', "monospace"],
+      },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [import("tailwindcss-animate")],
 };
