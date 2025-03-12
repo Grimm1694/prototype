@@ -194,7 +194,7 @@ const About = () => {
                 About Us
               </span>
             </h3>
-            <p className="text-base sm:text-lg text-hackathon-beige font-jetbrains relative z-10 max-h-64 sm:max-h-full overflow-y-auto pr-2">
+            <p className="text-base sm:text-lg text-hackathon-beige font-jetbrains relative z-10">
               Dr. Ambedkar Institute of Technology (Dr. AIT) was founded by M.H.
               Jayaprakash Narayan in 1980. Named after Dr. B.R. Ambedkar, the
               institute is affiliated to Visvesvaraya Technological University
@@ -252,7 +252,7 @@ const About = () => {
                 </motion.span>
               </h3>
             </div>
-            <p className="text-base sm:text-lg text-hackathon-beige font-jetbrains relative z-10 max-h-48 sm:max-h-full overflow-y-auto pr-2">
+            <p className="text-base sm:text-lg text-hackathon-beige font-jetbrains relative z-10">
               Colossus 2025 is a 24-hour hackathon where people from different
               backgrounds come together to build innovative tech projects. It's
               a chance for developers, designers, and creative thinkers to
@@ -303,7 +303,7 @@ const About = () => {
                 </motion.span>
               </h3>
             </div>
-            <div className="max-h-48 sm:max-h-full overflow-y-auto pr-2">
+            <div>
               <motion.ul
                 className="space-y-2 text-base sm:text-lg text-hackathon-beige font-jetbrains relative z-10"
                 variants={staggerContainerVariants}
