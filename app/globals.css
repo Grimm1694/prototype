@@ -20,6 +20,11 @@
   font-style: normal;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+
 /* (Your existing styles and custom animations) */
 @keyframes chomp {
   0% {

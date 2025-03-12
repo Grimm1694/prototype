@@ -30,6 +30,7 @@ const Header = () => {
   const navItems = [
     "About",
     "Schedule",
+    "Themes",
     // "Speakers",
     // "Sponsors",
     "Previous Hackathon",
@@ -170,7 +171,7 @@ const Header = () => {
     <>
       {/* Cursor spotlight effect */}
       <motion.div
-        className="fixed w-96 h-96 rounded-full pointer-events-none z-40 opacity-20 bg-gradient-radial from-hackathon-light-pink to-transparent hidden md:block"
+        className="fixed w-96 h-96 rounded- pointer-events-none z-40 opacity-20 bg-gradient-radial from-hackathon-light-pink to-transparent hidden md:block"
         variants={spotlightVariants}
         animate="animate"
         custom={mousePosition}

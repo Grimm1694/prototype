@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll } from "framer-motion";
 
@@ -72,7 +73,7 @@ const TimelineItem = ({
 }) => {
   const isLeft = index % 2 === 0;
 
-  // Animation variants for cards
+  // Animation variants (desktop and mobile can share similar animations)
   const cardVariants = {
     hidden: {
       opacity: 0,
@@ -92,7 +93,6 @@ const TimelineItem = ({
     },
   };
 
-  // Animation variants for branch lines
   const branchVariants = {
     hidden: { scaleX: 0 },
     visible: {
@@ -106,7 +106,6 @@ const TimelineItem = ({
     },
   };
 
-  // Animation variants for dots
   const dotVariants = {
     hidden: { scale: 0, opacity: 0 },
     visible: {
@@ -121,48 +120,116 @@ const TimelineItem = ({
   };
 
   return (
-    <div
-      className="grid items-center relative min-h-[120px]"
-      style={{ gridTemplateColumns: "1fr 80px auto 80px 1fr" }}
-    >
-      {isLeft ? (
-        <>
-          {/* Left side card with connector extension */}
-          <div className="col-start-1 col-end-2 flex justify-end pr-0">
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              animate={isVisible ? "visible" : "hidden"}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 0 20px rgba(255, 110, 199, 0.5)",
-                borderColor: "#FF6EC7",
-              }}
-              transition={{ duration: 0.3 }}
-              className="bg-hackathon-darker-blue p-6 rounded-lg shadow-lg border-2 border-hackathon-purple max-w-sm w-full backdrop-blur-sm bg-opacity-90 flex flex-col relative"
-            >
-              {/* Connector extension from card */}
-              <div className="absolute right-0 top-1/2 w-4 h-[3px] bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink transform -translate-y-1/2 translate-x-full"></div>
+    <>
+      {/* Desktop Layout (alternating left/right) */}
+      <div
+        className="hidden md:grid items-center relative min-h-[120px]"
+        style={{ gridTemplateColumns: "1fr 80px auto 80px 1fr" }}
+      >
+        {isLeft ? (
+          <>
+            {/* Left side card with connector extension */}
+            <div className="col-start-1 col-end-2 flex justify-end pr-0">
+              <motion.div
+                variants={cardVariants}
+                initial="hidden"
+                animate={isVisible ? "visible" : "hidden"}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 20px rgba(255, 110, 199, 0.5)",
+                  borderColor: "#FF6EC7",
+                }}
+                transition={{ duration: 0.3 }}
+                className="bg-hackathon-darker-blue p-6 rounded-lg shadow-lg border-2 border-hackathon-purple max-w-sm w-full backdrop-blur-sm bg-opacity-90 flex flex-col relative"
+              >
+                {/* Connector extension from card */}
+                <div className="absolute right-0 top-1/2 w-4 h-[3px] bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink transform -translate-y-1/2 translate-x-full"></div>
+                <h3 className="text-xl font-semibold mb-2 text-hackathon-lavender">
+                  {item.time} - {item.event}
+                </h3>
+                <p className="text-hackathon-beige">{item.description}</p>
+              </motion.div>
+            </div>
 
-              <h3 className="text-sm font-press-start mb-2 text-hackathon-lavender">
-                {item.time} - {item.event}
-              </h3>
-              <p className="text-hackathon-beige font-jetbrains text-sm">
-                {item.description}
-              </p>
-            </motion.div>
-          </div>
-          {/* Left branch line */}
-          <div className="col-start-2 col-end-3 flex justify-end items-center h-full">
-            <motion.div
-              variants={branchVariants}
-              initial="hidden"
-              animate={isVisible ? "visible" : "hidden"}
-              className="w-full h-[3px] bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink origin-right"
-            />
-          </div>
-          {/* Center dot */}
-          <div className="col-start-3 col-end-4 flex justify-center items-center">
+            {/* Left branch line */}
+            <div className="col-start-2 col-end-3 flex justify-end items-center h-full">
+              <motion.div
+                variants={branchVariants}
+                initial="hidden"
+                animate={isVisible ? "visible" : "hidden"}
+                className="w-full h-[3px] bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink origin-right"
+              />
+            </div>
+
+            {/* Center dot */}
+            <div className="col-start-3 col-end-4 flex justify-center items-center">
+              <motion.div
+                variants={dotVariants}
+                initial="hidden"
+                animate={isVisible ? "visible" : "hidden"}
+                className="z-10 w-6 h-6 rounded-full bg-hackathon-light-pink shadow-[0_0_15px_rgba(255,110,199,0.7)] border-4 border-hackathon-darker-blue"
+              />
+            </div>
+
+            {/* Empty right branch and card */}
+            <div className="col-start-4 col-end-6"></div>
+          </>
+        ) : (
+          <>
+            {/* Empty left branch and card */}
+            <div className="col-start-1 col-end-3"></div>
+
+            {/* Center dot */}
+            <div className="col-start-3 col-end-4 flex justify-center items-center">
+              <motion.div
+                variants={dotVariants}
+                initial="hidden"
+                animate={isVisible ? "visible" : "hidden"}
+                className="z-10 w-6 h-6 rounded-full bg-hackathon-light-pink shadow-[0_0_15px_rgba(255,110,199,0.7)] border-4 border-hackathon-darker-blue"
+              />
+            </div>
+
+            {/* Right branch line */}
+            <div className="col-start-4 col-end-5 flex justify-start items-center h-full">
+              <motion.div
+                variants={branchVariants}
+                initial="hidden"
+                animate={isVisible ? "visible" : "hidden"}
+                className="w-full h-[3px] bg-gradient-to-l from-hackathon-purple to-hackathon-light-pink origin-left"
+              />
+            </div>
+
+            {/* Right side card with connector extension */}
+            <div className="col-start-5 col-end-6 flex justify-start pl-0">
+              <motion.div
+                variants={cardVariants}
+                initial="hidden"
+                animate={isVisible ? "visible" : "hidden"}
+                whileHover={{
+                  scale: 1.05,
+                  boxShadow: "0 0 20px rgba(255, 110, 199, 0.5)",
+                  borderColor: "#FF6EC7",
+                }}
+                transition={{ duration: 0.3 }}
+                className="bg-hackathon-darker-blue p-6 rounded-lg shadow-lg border-2 border-hackathon-purple max-w-sm w-full backdrop-blur-sm bg-opacity-90 flex flex-col relative"
+              >
+                {/* Connector extension from card */}
+                <div className="absolute left-0 top-1/2 w-4 h-[3px] bg-gradient-to-l from-hackathon-purple to-hackathon-light-pink transform -translate-y-1/2 -translate-x-full"></div>
+                <h3 className="text-xl font-semibold mb-2 text-hackathon-lavender">
+                  {item.time} - {item.event}
+                </h3>
+                <p className="text-hackathon-beige">{item.description}</p>
+              </motion.div>
+            </div>
+          </>
+        )}
+      </div>
+
+      {/* Mobile Layout (single column) */}
+      <div className="md:hidden">
+        <div className="flex items-start space-x-4">
+          {/* Dot column */}
+          <div className="flex flex-col items-center">
             <motion.div
               variants={dotVariants}
               initial="hidden"
@@ -170,59 +237,27 @@ const TimelineItem = ({
               className="z-10 w-6 h-6 rounded-full bg-hackathon-light-pink shadow-[0_0_15px_rgba(255,110,199,0.7)] border-4 border-hackathon-darker-blue"
             />
           </div>
-          {/* Empty right branch and card */}
-          <div className="col-start-4 col-end-6"></div>
-        </>
-      ) : (
-        <>
-          {/* Empty left branch and card */}
-          <div className="col-start-1 col-end-3"></div>
-          {/* Center dot */}
-          <div className="col-start-3 col-end-4 flex justify-center items-center">
-            <motion.div
-              variants={dotVariants}
-              initial="hidden"
-              animate={isVisible ? "visible" : "hidden"}
-              className="z-10 w-6 h-6 rounded-full bg-hackathon-light-pink shadow-[0_0_15px_rgba(255,110,199,0.7)] border-4 border-hackathon-darker-blue"
-            />
-          </div>
-          {/* Right branch line */}
-          <div className="col-start-4 col-end-5 flex justify-start items-center h-full">
-            <motion.div
-              variants={branchVariants}
-              initial="hidden"
-              animate={isVisible ? "visible" : "hidden"}
-              className="w-full h-[3px] bg-gradient-to-l from-hackathon-purple to-hackathon-light-pink origin-left"
-            />
-          </div>
-          {/* Right side card with connector extension */}
-          <div className="col-start-5 col-end-6 flex justify-start pl-0">
-            <motion.div
-              variants={cardVariants}
-              initial="hidden"
-              animate={isVisible ? "visible" : "hidden"}
-              whileHover={{
-                scale: 1.05,
-                boxShadow: "0 0 20px rgba(255, 110, 199, 0.5)",
-                borderColor: "#FF6EC7",
-              }}
-              transition={{ duration: 0.3 }}
-              className="bg-hackathon-darker-blue p-6 rounded-lg shadow-lg border-2 border-hackathon-purple max-w-sm w-full backdrop-blur-sm bg-opacity-90 flex flex-col relative"
-            >
-              {/* Connector extension from card */}
-              <div className="absolute left-0 top-1/2 w-4 h-[3px] bg-gradient-to-l from-hackathon-purple to-hackathon-light-pink transform -translate-y-1/2 -translate-x-full"></div>
-
-              <h3 className="text-sm font-press-start mb-2 text-hackathon-lavender">
-                {item.time} - {item.event}
-              </h3>
-              <p className="text-hackathon-beige text-md font-jetbrains">
-                {item.description}
-              </p>
-            </motion.div>
-          </div>
-        </>
-      )}
-    </div>
+          {/* Card column */}
+          <motion.div
+            variants={cardVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            whileHover={{
+              scale: 1.05,
+              boxShadow: "0 0 20px rgba(255, 110, 199, 0.5)",
+              borderColor: "#FF6EC7",
+            }}
+            transition={{ duration: 0.3 }}
+            className="bg-hackathon-darker-blue p-6 rounded-lg shadow-lg border-2 border-hackathon-purple w-full backdrop-blur-sm bg-opacity-90 flex flex-col"
+          >
+            <h3 className="text-xl font-semibold mb-2 text-hackathon-lavender">
+              {item.time} - {item.event}
+            </h3>
+            <p className="text-hackathon-beige">{item.description}</p>
+          </motion.div>
+        </div>
+      </div>
+    </>
   );
 };
 
@@ -242,10 +277,8 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
-
     itemRefs.current.forEach((ref, index) => {
       if (!ref) return;
-
       const observer = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
@@ -261,19 +294,17 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         },
         { threshold: 0.3 }
       );
-
       observer.observe(ref);
       observers.push(observer);
     });
-
     return () => {
       observers.forEach((observer) => observer.disconnect());
     };
   }, []);
 
   return (
-    <section 
-      ref={containerRef} 
+    <section
+      ref={containerRef}
       className="py-24 relative bg-gradient-to-b from-hackathon-dark-blue to-hackathon-darker-blue overflow-hidden mr-5"
     >
       {/* Background decorative elements */}
@@ -289,17 +320,25 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl font-press-start text-hackathon-light-pink mb-3 uppercase">
+          <h2 className="text-5xl font-bold text-hackathon-light-pink mb-3 uppercase">
             Event Schedule
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink mx-auto rounded-full"></div>
         </motion.div>
 
-        {/* Main vertical line (grows with scroll) - extended to reach the last item */}
+        {/* Vertical Timeline Line */}
+        {/* Desktop vertical line */}
         <div
-          className="absolute left-1/2 top-32 bottom-20 w-1 bg-hackathon-darker-blue z-0"
+          className="hidden md:block absolute left-1/2 top-32 bottom-20 w-1 bg-hackathon-darker-blue z-0"
           style={{ height: "calc(100% - 160px)" }}
         >
+          <motion.div
+            style={{ scaleY: scrollYProgress, height: "100%" }}
+            className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"
+          />
+        </div>
+        {/* Mobile vertical line */}
+        <div className="block md:hidden absolute left-8 top-0 bottom-0 w-1 bg-hackathon-darker-blue z-0">
           <motion.div
             style={{ scaleY: scrollYProgress, height: "100%" }}
             className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"

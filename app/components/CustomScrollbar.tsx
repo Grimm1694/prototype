@@ -36,8 +36,13 @@ const CustomScrollbar = () => {
 
   return (
     <div
-      className="fixed top-0 h-full w-4 bg-retro-black"
-      style={{ right: "calc(0px + env(safe-area-inset-right))" }}
+      className="fixed w-4 bg-retro-black"
+      style={{
+        top: 0,
+        bottom: 0,
+        right: "calc(0px + env(safe-area-inset-right))",
+        zIndex: 50, // Higher z-index to ensure it's above hero section
+      }}
     >
       {/* Background line */}
       <div className="absolute left-1/2 h-full w-0.5 bg-retro-pink transform -translate-x-1/2" />
@@ -53,11 +58,11 @@ const CustomScrollbar = () => {
           })`,
         }}
       >
-        {/* A small “eye” for Pac-Man */}
+        {/* A small "eye" for Pac-Man */}
         <div className="w-1 h-1 bg-retro-black rounded-full" />
       </div>
 
-      {/* Render only the dots that Pac-Man has not yet “eaten” */}
+      {/* Render only the dots that Pac-Man has not yet "eaten" */}
       {visibleDotPositions.map((pos, index) => (
         <div
           key={index}
