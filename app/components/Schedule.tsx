@@ -227,17 +227,24 @@ const TimelineItem = ({
 
       {/* Mobile Layout (single column) */}
       <div className="md:hidden">
-        <div className="flex items-start space-x-4">
-          {/* Dot column */}
-          <div className="flex flex-col items-center">
+        <div className="flex items-start space-x-6">
+          {/* Dot column with more space */}
+          <div className="flex flex-col items-center relative">
             <motion.div
               variants={dotVariants}
               initial="hidden"
               animate={isVisible ? "visible" : "hidden"}
               className="z-10 w-6 h-6 rounded-full bg-hackathon-light-pink shadow-[0_0_15px_rgba(255,110,199,0.7)] border-4 border-hackathon-darker-blue"
             />
+            {/* Optional horizontal connector line */}
+            <motion.div
+              variants={branchVariants}
+              initial="hidden"
+              animate={isVisible ? "visible" : "hidden"}
+              className="absolute top-3 left-6 w-6 h-[3px] bg-gradient-to-r from-hackathon-light-pink to-hackathon-purple"
+            />
           </div>
-          {/* Card column */}
+          {/* Card column with more spacing from the timeline */}
           <motion.div
             variants={cardVariants}
             initial="hidden"
@@ -304,7 +311,7 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
 
   return (
     <section
-    id="schedule"
+      id="schedule"
       ref={containerRef}
       className="py-24 relative bg-gradient-to-b from-hackathon-dark-blue to-hackathon-darker-blue overflow-hidden mr-5"
     >
@@ -338,8 +345,8 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
             className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"
           />
         </div>
-        {/* Mobile vertical line */}
-        <div className="block md:hidden absolute left-8 top-0 bottom-0 w-1 bg-hackathon-darker-blue z-0">
+        {/* Mobile vertical line - Moving it further left */}
+        <div className="block md:hidden absolute left-3 top-32 bottom-20 w-1 bg-hackathon-darker-blue z-0" style={{ height: "calc(100% - 160px)" }}>
           <motion.div
             style={{ scaleY: scrollYProgress, height: "100%" }}
             className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"
