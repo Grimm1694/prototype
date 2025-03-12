@@ -35,7 +35,10 @@ const CustomScrollbar = () => {
   );
 
   return (
-    <div className="fixed right-0 top-0 h-full w-4 bg-retro-black">
+    <div
+      className="fixed top-0 h-full w-4 bg-retro-black"
+      style={{ right: "calc(0px + env(safe-area-inset-right))" }}
+    >
       {/* Background line */}
       <div className="absolute left-1/2 h-full w-0.5 bg-retro-pink transform -translate-x-1/2" />
 
