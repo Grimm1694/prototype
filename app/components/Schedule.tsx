@@ -27,38 +27,44 @@ const timelineData: TimelineEntry[] = [
   },
   {
     time: "1:00 PM",
-    event: "Lunch Break",
+    event: "First Round",
+    description: "First round evaluation and feedback.",
+  },
+  {
+    time: "2:00 PM",
+    event: "Lunch",
     description: "Enjoy a break and network with fellow participants.",
   },
   {
+    time: "5:00 PM",
+    event: "Second Round",
+    description: "Second round evaluation and feedback.",
+  },
+  {
     time: "6:00 PM",
+    event: "Snack",
+    description: "Grab a quick snack to keep your energy up.",
+  },
+  {
+    time: "8:00 PM",
     event: "Dinner",
     description: "Dine and discuss progress over a great meal.",
   },
   {
     time: "12:00 AM",
-    event: "Midnight Snack",
-    description: "Grab a quick snack to keep your energy up.",
+    event: "Midnight Snacks",
+    description:
+      "Wrap up your projects and prepare for the next phase with midnight snacks.",
   },
   {
-    time: "9:00 AM",
-    event: "Breakfast",
+    time: "8:00 AM",
+    event: "BreakFast",
     description: "Start your day with a hearty breakfast.",
   },
   {
-    time: "12:00 PM",
-    event: "Hacking Ends",
-    description: "Wrap up your projects and prepare for the next phase.",
-  },
-  {
-    time: "2:00 PM",
-    event: "Project Presentations",
-    description: "Showcase your completed projects to everyone.",
-  },
-  {
-    time: "4:00 PM",
-    event: "Awards Ceremony",
-    description: "Celebrate and receive awards for your hard work.",
+    time: "9:00 PM",
+    event: "Final Round",
+    description: "Showcase your final projects and celebrate with awards.",
   },
 ];
 
@@ -346,7 +352,10 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
           />
         </div>
         {/* Mobile vertical line - Moving it further left */}
-        <div className="block md:hidden absolute left-3 top-32 bottom-20 w-1 bg-hackathon-darker-blue z-0" style={{ height: "calc(100% - 160px)" }}>
+        <div
+          className="block md:hidden absolute left-3 top-32 bottom-20 w-1 bg-hackathon-darker-blue z-0"
+          style={{ height: "calc(100% - 160px)" }}
+        >
           <motion.div
             style={{ scaleY: scrollYProgress, height: "100%" }}
             className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"
