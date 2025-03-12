@@ -65,12 +65,16 @@ const TimelineItem = ({
   item,
   index,
   isVisible,
+  isMobile,
 }: {
   item: TimelineEntry;
   index: number;
   isVisible: boolean;
+  isMobile: boolean;
 }) => {
-  const isLeft = index % 2 === 0;
+  // On mobile, all items are shown on the same side
+  // On desktop, alternate between left and right
+  const isLeft = isMobile ? true : index % 2 === 0;
 
   // Animation variants for cards
   const cardVariants = {
@@ -120,6 +124,45 @@ const TimelineItem = ({
     },
   };
 
+  // Mobile layout has all items on the left with the timeline on the right
+  if (isMobile) {
+    return (
+      <div className="flex items-start relative min-h-[120px] gap-4">
+        {/* Card */}
+        <motion.div
+          variants={cardVariants}
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          whileHover={{
+            scale: 1.03,
+            boxShadow: "0 0 20px rgba(255, 110, 199, 0.5)",
+            borderColor: "#FF6EC7",
+          }}
+          transition={{ duration: 0.3 }}
+          className="bg-hackathon-darker-blue p-4 rounded-lg shadow-lg border-2 border-hackathon-purple w-full backdrop-blur-sm bg-opacity-90 flex flex-col relative"
+        >
+          <h3 className="text-xs font-press-start mb-2 text-hackathon-lavender break-words">
+            {item.time} - {item.event}
+          </h3>
+          <p className="text-hackathon-beige font-jetbrains text-xs">
+            {item.description}
+          </p>
+        </motion.div>
+
+        {/* Timeline dot */}
+        <div className="flex-shrink-0">
+          <motion.div
+            variants={dotVariants}
+            initial="hidden"
+            animate={isVisible ? "visible" : "hidden"}
+            className="z-10 w-4 h-4 rounded-full bg-hackathon-light-pink shadow-[0_0_15px_rgba(255,110,199,0.7)] border-2 border-hackathon-darker-blue"
+          />
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop layout with alternating sides
   return (
     <div
       className="grid items-center relative min-h-[120px]"
@@ -239,6 +282,23 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   const [visibleItems, setVisibleItems] = useState<boolean[]>(
     Array(data.length).fill(false)
   );
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if we're on mobile based on screen width
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Initial check
+    checkMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -274,7 +334,7 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
   return (
     <section 
       ref={containerRef} 
-      className="py-24 relative bg-gradient-to-b from-hackathon-dark-blue to-hackathon-darker-blue overflow-hidden mr-5"
+      className="py-12 md:py-24 relative bg-gradient-to-b from-hackathon-dark-blue to-hackathon-darker-blue overflow-hidden"
     >
       {/* Background decorative elements */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
@@ -282,51 +342,40 @@ const Timeline = ({ data }: { data: TimelineEntry[] }) => {
         <div className="absolute right-0 top-3/4 w-80 h-80 rounded-full bg-hackathon-light-pink opacity-5 blur-3xl"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-16"
+          className="text-center mb-8 md:mb-16"
         >
-          <h2 className="text-4xl font-press-start text-hackathon-light-pink mb-3 uppercase">
+          <h2 className="text-2xl md:text-4xl font-press-start text-hackathon-light-pink mb-3 uppercase">
             Event Schedule
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink mx-auto rounded-full"></div>
+          <div className="w-16 md:w-24 h-1 bg-gradient-to-r from-hackathon-purple to-hackathon-light-pink mx-auto rounded-full"></div>
         </motion.div>
 
-        {/* Main vertical line (grows with scroll) - extended to reach the last item */}
-        <div
-          className="absolute left-1/2 top-32 bottom-20 w-1 bg-hackathon-darker-blue z-0"
-          style={{ height: "calc(100% - 160px)" }}
-        >
-          <motion.div
-            style={{ scaleY: scrollYProgress, height: "100%" }}
-            className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"
-          />
-        </div>
-
-        <div className="space-y-20 relative z-10">
-          {data.map((item, index) => (
-            <div
-              key={index}
-              ref={(el) => {
-                itemRefs.current[index] = el;
-              }}
-            >
-              <TimelineItem
-                item={item}
-                index={index}
-                isVisible={visibleItems[index]}
+        {/* Main vertical line container */}
+        <div className="relative">
+          {/* Mobile timeline - right aligned vertical line */}
+          {isMobile && (
+            <div className="absolute right-2 top-0 bottom-0 w-1 bg-hackathon-darker-blue z-0">
+              <motion.div
+                style={{ scaleY: scrollYProgress, height: "100%" }}
+                className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"
               />
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
+          )}
 
-export default function App() {
-  return <Timeline data={timelineData} />;
-}
+          {/* Desktop timeline - center aligned vertical line */}
+          {!isMobile && (
+            <div
+              className="absolute left-1/2 top-4 bottom-4 w-1 bg-hackathon-darker-blue z-0"
+              style={{ transform: "translateX(-50%)" }}
+            >
+              <motion.div
+                style={{ scaleY: scrollYProgress, height: "100%" }}
+                className="bg-gradient-to-b from-hackathon-purple to-hackathon-light-pink origin-top w-full rounded-full shadow-[0_0_10px_rgba(255,110,199,0.5)]"
+              />
+            </div>
+          )}
